@@ -1,4 +1,4 @@
-package home
+package custom
 
 import (
 	"image/color"

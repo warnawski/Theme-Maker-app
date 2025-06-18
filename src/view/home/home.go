@@ -5,6 +5,9 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
 	loader "github.com/warnawski/theme-maker/internal/loader"
+	"github.com/warnawski/theme-maker/src/components/custom"
+	"github.com/warnawski/theme-maker/src/components/indents"
+	"github.com/warnawski/theme-maker/src/view/icon"
 )
 
 func HomeView() fyne.CanvasObject {
@@ -15,7 +18,7 @@ func HomeView() fyne.CanvasObject {
 	view := container.NewVBox(
 		container.NewCenter(logo),
 		ListButton(),
-		TopMargin(30),
+		indents.TopMargin(30),
 		NewProjectButtons(),
 	)
 
@@ -34,13 +37,13 @@ func ListButton() fyne.CanvasObject {
 	btn3.Importance = widget.LowImportance
 
 	res := container.NewHBox(
-		ButtonMargin(60, 20),
+		indents.ButtonMargin(60, 20),
 		btn1,
-		ButtonGap(15, 20),
+		indents.ButtonGap(15, 20),
 		btn2,
-		ButtonGap(15, 20),
+		indents.ButtonGap(15, 20),
 		btn3,
-		ButtonMargin(60, 20),
+		indents.ButtonMargin(60, 20),
 	)
 
 	return res
@@ -48,16 +51,18 @@ func ListButton() fyne.CanvasObject {
 
 func NewProjectButtons() fyne.CanvasObject {
 
-	btn1 := NewCButton("🎨 New Theme", func() {})
+	btn1 := custom.NewCButton("🎨 New Theme", func() {})
 
-	btn2 := NewCButton("📌 New Icon", func() {})
+	btn2 := custom.NewCButton("📌 New Icon", func() {
+		icon.IconView()
+	})
 
 	btns := container.NewHBox(
-		ButtonMargin(80, 20),
+		indents.ButtonMargin(80, 20),
 		btn1,
-		ButtonGap(20, 20),
+		indents.ButtonGap(20, 20),
 		btn2,
-		ButtonMargin(80, 20),
+		indents.ButtonMargin(80, 20),
 	)
 
 	return btns

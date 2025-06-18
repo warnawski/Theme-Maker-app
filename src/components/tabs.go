@@ -14,17 +14,22 @@ func NewTabs(a fyne.App) *container.AppTabs {
 	tabs := container.NewAppTabs(
 
 		container.NewTabItemWithIcon(
-			"Home                                                 ",
+			"Home                           ",
 			theme.HomeIcon(),
 			view.HomeView()),
 
 		container.NewTabItemWithIcon(
-			"Docs       ",
+			"Work Area                                                            ",
+			theme.WarningIcon(),
+			widget.NewLabel("")),
+
+		container.NewTabItemWithIcon(
+			"Docs",
 			theme.HelpIcon(),
 			widget.NewLabel("")),
 
 		container.NewTabItemWithIcon(
-			"Settings                         ",
+			"Settings",
 			theme.SettingsIcon(),
 			settings.SettingsView(a)),
 	)
