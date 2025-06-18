@@ -4,12 +4,12 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
-	loader "github.com/warnawski/theme-maker/internal/image"
+	loader "github.com/warnawski/theme-maker/internal/loader"
 )
 
 func HomeView() fyne.CanvasObject {
 
-	logo := loader.LoadFyneCanvasImage("resource/theme-icon.png")
+	logo := loader.LoadFyneCanvasImage("resource/assets/theme-icon.png")
 	logo.SetMinSize(fyne.NewSize(350, 350))
 
 	view := container.NewVBox(

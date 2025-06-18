@@ -12,7 +12,7 @@ func SettingsView(a fyne.App) fyne.CanvasObject {
 
 	view := container.NewVBox(
 		widget.NewLabel("App theme switcher"),
-		widget.NewSelect([]string{"Dark", "Retro"}, func(selected string) {
+		widget.NewSelect([]string{"Dark", "Retro", "Dracula", "Monokai", "Solarized-Dark"}, func(selected string) {
 			themeSwitcher(a, selected)
 		}),
 	)
@@ -28,5 +28,11 @@ func themeSwitcher(a fyne.App, selected string) {
 		a.Settings().SetTheme(theme.DarkTheme())
 	case "Retro":
 		a.Settings().SetTheme(t.NewRetroTheme())
+	case "Dracula":
+		a.Settings().SetTheme(t.NewDraculaTheme())
+	case "Monokai":
+		a.Settings().SetTheme(t.NewMonokaiTheme())
+	case "Solarized-Dark":
+		a.Settings().SetTheme(t.NewSolarizedDarkTheme())
 	}
 }

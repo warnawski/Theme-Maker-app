@@ -9,7 +9,7 @@ import (
 	"github.com/warnawski/theme-maker/src/components"
 )
 
-func MainWindow() {
+func StartApp() {
 
 	app := app.New()
 	app.Settings().SetTheme(theme.DarkTheme())
