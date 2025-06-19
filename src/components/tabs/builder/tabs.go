@@ -1,11 +1,11 @@
-package tabs
+package builder
 
 import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/theme"
 	"github.com/warnawski/theme-maker/src/view/home"
 	"github.com/warnawski/theme-maker/src/view/settings"
-	void "github.com/warnawski/theme-maker/src/view/work/content"
+	"github.com/warnawski/theme-maker/src/view/work/content"
 )
 
 type TabBuilder struct {
@@ -26,19 +26,33 @@ func (t TabBuilder) BuildTab() *container.AppTabs {
 		container.NewTabItemWithIcon(
 			"Home                           ",
 			theme.HomeIcon(),
-			home.HomeView(t.tabs),
+			container.NewWithoutLayout(),
 		),
-
 		container.NewTabItemWithIcon(
 			"Work Area                                                            ",
 			theme.WarningIcon(),
-			void.VoidContent(),
+			container.NewWithoutLayout(),
 		),
-
-		container.NewTabItemWithIcon("Docs", theme.HelpIcon(), void.VoidContent()),
-		container.NewTabItemWithIcon("List", theme.ListIcon(), void.VoidContent()),
-		container.NewTabItemWithIcon("Settings", theme.SettingsIcon(), settings.SettingsView(t.switcher)),
+		container.NewTabItemWithIcon("Docs", theme.HelpIcon(), container.NewWithoutLayout()),
+		container.NewTabItemWithIcon("List", theme.ListIcon(), container.NewWithoutLayout()),
+		container.NewTabItemWithIcon("Settings", theme.SettingsIcon(), container.NewWithoutLayout()),
 	)
 
+	t.tabs = tabs
+
+	tabs.Items[0].Content = home.HomeView(t, tabs)
+	tabs.Items[1].Content = content.VoidContent()
+	tabs.Items[4].Content = settings.SettingsView(t.switcher)
+
 	return tabs
+}
+
+func (t TabBuilder) AskIndex(title string) {
+
+	for index, tab := range t.tabs.Items {
+		if tab.Text == title {
+			t.tabs.SelectIndex(index)
+			break
+		}
+	}
 }

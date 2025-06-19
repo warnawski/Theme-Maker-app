@@ -9,9 +9,11 @@ import (
 	loader "github.com/warnawski/theme-maker/internal/loader"
 	custom "github.com/warnawski/theme-maker/src/components/button"
 	"github.com/warnawski/theme-maker/src/components/layout"
+	"github.com/warnawski/theme-maker/src/components/tabs/common"
+	"github.com/warnawski/theme-maker/src/view/icon"
 )
 
-func HomeView(tabs *container.AppTabs) fyne.CanvasObject {
+func HomeView(tabmngr common.TapManager, tabs *container.AppTabs) fyne.CanvasObject {
 
 	logo := loader.LoadFyneCanvasImage("resource/assets/theme-icon.png")
 	logo.SetMinSize(fyne.NewSize(350, 350))
@@ -20,7 +22,7 @@ func HomeView(tabs *container.AppTabs) fyne.CanvasObject {
 		container.NewCenter(logo),
 		ListButton(),
 		layout.TopMargin(30),
-		NewProjectButtons(tabs),
+		NewProjectButtons(tabmngr, tabs),
 	)
 
 	return view
@@ -50,15 +52,16 @@ func ListButton() fyne.CanvasObject {
 	return res
 }
 
-func NewProjectButtons(tabs *container.AppTabs) fyne.CanvasObject {
+func NewProjectButtons(tabmngr common.TapManager, tabs *container.AppTabs) fyne.CanvasObject {
 
 	btn1 := custom.NewCButton("🎨 New Theme", func() {})
 
 	btn2 := custom.NewCButton("📌 New Icon", func() {
-		content := widget.NewLabel("DGVSDGSDGSDG")
-		log.Println("Таб")
-		tabs.Items[1].Content = content
-		tabs.Refresh()
+
+		tabs.SelectIndex(1)
+		tabs.Items[1].Content = icon.NewIconView()
+		log.Println("CKICK")
+
 	})
 
 	btns := container.NewHBox(

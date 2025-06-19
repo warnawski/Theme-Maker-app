@@ -6,7 +6,7 @@ import (
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/theme"
-	"github.com/warnawski/theme-maker/src/components/tabs"
+	"github.com/warnawski/theme-maker/src/components/tabs/builder"
 	"github.com/warnawski/theme-maker/src/view/settings"
 )
 
@@ -17,7 +17,7 @@ func StartApp() {
 	window := app.NewWindow("Theme-Maker")
 
 	switcher := settings.NewThemeManager(app)
-	tabs := tabs.NewTabBuilder(switcher)
+	tabs := builder.NewTabBuilder(switcher)
 
 	window.SetContent(withThemeBackground(tabs.BuildTab(), app))
 
