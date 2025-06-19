@@ -60,6 +60,7 @@ func NewProjectButtons(tabmngr common.TapManager, tabs *container.AppTabs) fyne.
 
 		tabs.SelectIndex(1)
 		tabs.Items[1].Content = icon.NewIconView()
+		tabs.Refresh()
 		log.Println("CKICK")
 
 	})
