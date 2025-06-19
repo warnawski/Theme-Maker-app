@@ -1,16 +1,17 @@
 package home
 
 import (
+	"log"
+
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
 	loader "github.com/warnawski/theme-maker/internal/loader"
-	"github.com/warnawski/theme-maker/src/components/custom"
-	"github.com/warnawski/theme-maker/src/components/indents"
-	"github.com/warnawski/theme-maker/src/view/icon"
+	custom "github.com/warnawski/theme-maker/src/components/button"
+	"github.com/warnawski/theme-maker/src/components/layout"
 )
 
-func HomeView() fyne.CanvasObject {
+func HomeView(tabs *container.AppTabs) fyne.CanvasObject {
 
 	logo := loader.LoadFyneCanvasImage("resource/assets/theme-icon.png")
 	logo.SetMinSize(fyne.NewSize(350, 350))
@@ -18,8 +19,8 @@ func HomeView() fyne.CanvasObject {
 	view := container.NewVBox(
 		container.NewCenter(logo),
 		ListButton(),
-		indents.TopMargin(30),
-		NewProjectButtons(),
+		layout.TopMargin(30),
+		NewProjectButtons(tabs),
 	)
 
 	return view
@@ -37,32 +38,35 @@ func ListButton() fyne.CanvasObject {
 	btn3.Importance = widget.LowImportance
 
 	res := container.NewHBox(
-		indents.ButtonMargin(60, 20),
+		layout.ButtonMargin(60, 20),
 		btn1,
-		indents.ButtonGap(15, 20),
+		layout.ButtonGap(15, 20),
 		btn2,
-		indents.ButtonGap(15, 20),
+		layout.ButtonGap(15, 20),
 		btn3,
-		indents.ButtonMargin(60, 20),
+		layout.ButtonMargin(60, 20),
 	)
 
 	return res
 }
 
-func NewProjectButtons() fyne.CanvasObject {
+func NewProjectButtons(tabs *container.AppTabs) fyne.CanvasObject {
 
 	btn1 := custom.NewCButton("🎨 New Theme", func() {})
 
 	btn2 := custom.NewCButton("📌 New Icon", func() {
-		icon.IconView()
+		content := widget.NewLabel("DGVSDGSDGSDG")
+		log.Println("Таб")
+		tabs.Items[1].Content = content
+		tabs.Refresh()
 	})
 
 	btns := container.NewHBox(
-		indents.ButtonMargin(80, 20),
+		layout.ButtonMargin(80, 20),
 		btn1,
-		indents.ButtonGap(20, 20),
+		layout.ButtonGap(20, 20),
 		btn2,
-		indents.ButtonMargin(80, 20),
+		layout.ButtonMargin(80, 20),
 	)
 
 	return btns

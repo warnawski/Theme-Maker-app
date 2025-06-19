@@ -6,7 +6,8 @@ import (
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/theme"
-	"github.com/warnawski/theme-maker/src/components"
+	"github.com/warnawski/theme-maker/src/components/tabs"
+	"github.com/warnawski/theme-maker/src/view/settings"
 )
 
 func StartApp() {
@@ -15,7 +16,10 @@ func StartApp() {
 	app.Settings().SetTheme(theme.DarkTheme())
 	window := app.NewWindow("Theme-Maker")
 
-	window.SetContent(withThemeBackground(components.NewTabs(app), app))
+	switcher := settings.NewThemeManager(app)
+	tabs := tabs.NewTabBuilder(switcher)
+
+	window.SetContent(withThemeBackground(tabs.BuildTab(), app))
 
 	window.Resize(fyne.NewSize(550, 700))
 	window.SetFixedSize(true)
@@ -44,3 +48,5 @@ func withThemeBackground(content fyne.CanvasObject, a fyne.App) fyne.CanvasObjec
 
 	return container.NewMax(bg, content)
 }
+
+func IFFasControl() {}

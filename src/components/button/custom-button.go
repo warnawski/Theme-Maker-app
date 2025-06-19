@@ -107,6 +107,10 @@ func NewCButton(text string, onClick func()) *CustomButton {
 func (cb *CustomButton) Tapped(*fyne.PointEvent) {
 	cb.tapAnim.Stop()
 	cb.tapAnim.Start()
+
+	if cb.OnTapped != nil {
+		cb.OnTapped()
+	}
 }
 
 func (cb *CustomButton) MouseIn(*desktop.MouseEvent) {

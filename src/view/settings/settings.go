@@ -5,38 +5,48 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
-	t "github.com/warnawski/theme-maker/src/components/theme"
+	"github.com/warnawski/theme-maker/src/view/settings/colortheme"
 )
 
-func SettingsView(a fyne.App) fyne.CanvasObject {
+type ThemeSwitcher interface {
+	SetTheme(name string)
+}
+
+type ThemeManager struct {
+	App   fyne.App
+	Cache map[string]fyne.Theme
+}
+
+func NewThemeManager(app fyne.App) *ThemeManager {
+	return &ThemeManager{
+		App: app,
+		Cache: map[string]fyne.Theme{
+			"Dark":           theme.DarkTheme(),
+			"Light":          theme.LightTheme(),
+			"Clean-White":    colortheme.NewCleanWhiteTheme(),
+			"Retro":          colortheme.NewRetroTheme(),
+			"Dracula":        colortheme.NewDraculaTheme(),
+			"Monokai":        colortheme.NewMonokaiTheme(),
+			"Solarized-Dark": colortheme.NewSolarizedDarkTheme(),
+		},
+	}
+}
+
+func (tm ThemeManager) SetTheme(name string) {
+	theme, ok := tm.Cache[name]
+	if ok {
+		tm.App.Settings().SetTheme(theme)
+	}
+}
+
+func SettingsView(switcher ThemeSwitcher) fyne.CanvasObject {
 
 	view := container.NewVBox(
 		widget.NewLabel("App theme switcher"),
 		widget.NewSelect([]string{"Dark", "Light", "Clean-White", "Retro", "Dracula", "Monokai", "Solarized-Dark"}, func(selected string) {
-			themeSwitcher(a, selected)
+			switcher.SetTheme(selected)
 		}),
 	)
 
 	return view
-}
-
-func themeSwitcher(a fyne.App, selected string) {
-
-	switch selected {
-
-	case "Dark":
-		a.Settings().SetTheme(theme.DarkTheme())
-	case "Light":
-		a.Settings().SetTheme(theme.LightTheme())
-	case "Clean-White":
-		a.Settings().SetTheme(t.NewCleanWhiteTheme())
-	case "Retro":
-		a.Settings().SetTheme(t.NewRetroTheme())
-	case "Dracula":
-		a.Settings().SetTheme(t.NewDraculaTheme())
-	case "Monokai":
-		a.Settings().SetTheme(t.NewMonokaiTheme())
-	case "Solarized-Dark":
-		a.Settings().SetTheme(t.NewSolarizedDarkTheme())
-	}
 }
